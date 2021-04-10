@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private String currentDate;
     ArrayList<VisitorModel> lessonArrayList = new ArrayList<>();
     final LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-    private Button refreshButton;
+//    private Button refreshButton;
     Api api;
     private String BaseUrl = "http://65.1.117.91/";
     private TextView todayDate;
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.rv);
         addNewVisitor = findViewById(R.id.addNewVisitor);
-        refreshButton = findViewById(R.id.refreshButton);
+//        refreshButton = findViewById(R.id.refreshButton);
         todayDate=findViewById(R.id.currentDate);
         currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
@@ -88,12 +88,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         // to refresh data
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getVisitorData();
-            }
-        });
+//        refreshButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getVisitorData();
+//            }
+//        });
 
         // to go new visitor activity
         addNewVisitor.setOnClickListener(new View.OnClickListener() {
