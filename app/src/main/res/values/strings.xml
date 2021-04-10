@@ -1,19 +1,15 @@
 <resources>
     <string name="app_name">Visitor Managment</string>
-    <string name="purpose">Purpose</string>
-    <string name="name">Name</string>
-    <string name="phone">Phone</string>
+
     <string name="no_of_person">No. of person</string>
-    <string name="date">Date</string>
     <string name="add_image_1">Add Image 1</string>
     <string name="add_image_2">Add Image 2</string>
     <string name="save">Save</string>
-    <string name="add_new_visitor">ADD NEW VISITOR</string>
+
     <string name="name">Name</string>
     <string name="phone">Phone</string>
     <string name="purpose">Purpose</string>
     <string name="date">Date</string>
-    <string name="in_time">In Time</string>
     <string name="mark_out">Mark Out</string>
     <string name="in_time">In Time</string>
     <string name="uploading">Uploading</string>

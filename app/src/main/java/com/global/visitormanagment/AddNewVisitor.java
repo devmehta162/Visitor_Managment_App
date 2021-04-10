@@ -4,11 +4,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -25,6 +29,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.global.visitormanagment.model.VisitorModel;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -49,6 +55,9 @@ public class AddNewVisitor extends AppCompatActivity {
     private static final int MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1;
     final int ACTIVITY_SELECT_IMAGE1 = 2;
     final int ACTIVITY_SELECT_IMAGE2 = 3;
+    final int ACTIVITY_SELECT_IMAGE3 = 4;
+    final int ACTIVITY_SELECT_IMAGE4 = 5;
+
     private static final int PERMISSION_REQUEST_CODE = 100;
     //string
     private String encodedImage1, encodedImage2;
@@ -58,7 +67,6 @@ public class AddNewVisitor extends AppCompatActivity {
     private String BaseUrl = "http://65.1.117.91/";
     public static int flag = 0;
     private LoadingDialogProgressBar loadingDialogProgressBar;
-
 
     //vars
     private ImageView image1, image2;
@@ -130,9 +138,22 @@ public class AddNewVisitor extends AppCompatActivity {
         addImage1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(AddNewVisitor.this);
+                builder1.setTitle("Select Photo");
+                //  builder1.setMessage("Please Add Symptoms etc. in your Booking Screen");
+                builder1.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        captureImage1(ACTIVITY_SELECT_IMAGE1, false);
+                    }
+                });
+                builder1.setNegativeButton("Gallery", (dialog, which) -> {
+                    captureImage1(ACTIVITY_SELECT_IMAGE1, true);
 
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(intent, ACTIVITY_SELECT_IMAGE1);
+                });
+                builder1.setCancelable(false);
+                builder1.create().show();
+
 
 
             }
@@ -140,9 +161,23 @@ public class AddNewVisitor extends AppCompatActivity {
         addImage2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(AddNewVisitor.this);
+                builder1.setTitle("Select Photo");
+                //  builder1.setMessage("Please Add Symptoms etc. in your Booking Screen");
+                builder1.setPositiveButton("Camera", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        captureImage2(ACTIVITY_SELECT_IMAGE2, false);
+                    }
+                });
+                builder1.setNegativeButton("Gallery", (dialog, which) -> {
+                    captureImage2(ACTIVITY_SELECT_IMAGE2, true);
 
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                startActivityForResult(intent, ACTIVITY_SELECT_IMAGE2);
+                });
+                builder1.setCancelable(false);
+                builder1.create().show();
+//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+//                startActivityForResult(intent, ACTIVITY_SELECT_IMAGE2);
 
 
             }
@@ -173,7 +208,6 @@ public class AddNewVisitor extends AppCompatActivity {
             }
         });
     }
-
 
 
     // post api to add new visitor
@@ -237,6 +271,7 @@ public class AddNewVisitor extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Log.d(TAG, "onActivityResult: requestCode"+requestCode);
 
         if (requestCode == ACTIVITY_SELECT_IMAGE1 && resultCode == RESULT_OK) {
             Uri path = data.getData();
@@ -269,7 +304,28 @@ public class AddNewVisitor extends AppCompatActivity {
 
 
         }
+        if (requestCode == ACTIVITY_SELECT_IMAGE3 && resultCode == RESULT_OK) {
+
+            encodedImage1 = "";
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            image1.setVisibility(View.VISIBLE);
+
+            image1.setImageBitmap(bitmap);
+
+
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+            encodedImage1 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+            Log.d(TAG, "onActivityResult:encodedImage1 " + encodedImage1);
+
+
+
+        }
         if (requestCode == ACTIVITY_SELECT_IMAGE2 && resultCode == RESULT_OK) {
+
             Uri path = data.getData();
             String[] filePath = {MediaStore.Images.Media.DATA};
             encodedImage2 = "";
@@ -281,7 +337,6 @@ public class AddNewVisitor extends AppCompatActivity {
                     .asBitmap()
                     .load(path)
                     .into(image2);
-
             try {
 
                 InputStream inputStream = AddNewVisitor.this.getContentResolver().openInputStream(path);
@@ -289,13 +344,30 @@ public class AddNewVisitor extends AppCompatActivity {
                 inputStream.read(pdfInBytes);
                 encodedImage2 = Base64.encodeToString(pdfInBytes, Base64.DEFAULT);
 
-                Log.d(TAG, "onActivityResult: encodedQuestionImage" + encodedImage2);
-
-                //   Toast.makeText(this, "Document Selected", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onActivityResult: encodedImage2" + encodedImage2);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+        if (requestCode == ACTIVITY_SELECT_IMAGE4 && resultCode == RESULT_OK) {
+
+            encodedImage2 = "";
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            image2.setVisibility(View.VISIBLE);
+
+            image2.setImageBitmap(bitmap);
+
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+            encodedImage2 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+            Log.d(TAG, "onActivityResult:encodedImage2 " + encodedImage2);
+
+
         }
 
     }
@@ -305,6 +377,29 @@ public class AddNewVisitor extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         date.setText(sdf.format(myCalendar.getTime()));
+    }
+
+    public void captureImage1(int code, boolean b) {
+        if (b) {
+            Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+            startActivityForResult(gallery, ACTIVITY_SELECT_IMAGE1);
+        } else {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            startActivityForResult(intent, ACTIVITY_SELECT_IMAGE3);
+        }
+    }
+
+    public void captureImage2(int code, boolean b) {
+        if (b) {
+            Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+            startActivityForResult(gallery, ACTIVITY_SELECT_IMAGE2);
+        } else {
+
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            startActivityForResult(intent, ACTIVITY_SELECT_IMAGE4);
+        }
     }
 
     @Override
