@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         todayDate=findViewById(R.id.currentDate);
         currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-
+//
         todayDateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(new Date());
 
 
