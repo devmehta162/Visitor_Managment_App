@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Visitor Managment</string>
 
-    <string name="no_of_person">No. of person</string>
-    <string name="add_image_1">Add Image 1</string>
-    <string name="add_image_2">Add Image 2</string>
+    <string name="no_of_person">Number of person</string>
+    <string name="add_image_1">Id proof 1</string>
+    <string name="add_image_2">Id proof 2</string>
     <string name="save">Save</string>
 
     <string name="name">Name</string>

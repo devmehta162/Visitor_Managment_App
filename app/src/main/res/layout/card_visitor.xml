@@ -14,109 +14,137 @@
         >
 
 
-        <TextView
-            android:id="@+id/txtName"
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="14"
             android:layout_height="wrap_content"
-            android:text="Name"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="end"
-            android:layout_marginRight="10dp"
-            android:padding="10dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            />
-        <TextView
-            android:id="@+id/txtPhone"
-            android:layout_width="0dp"
-            android:layout_weight="14"
-            android:layout_height="wrap_content"
-            android:text="Phone"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="end"
-            android:layout_marginRight="10dp"
-            android:padding="10dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            />
+            android:layout_weight="28">
 
-        <TextView
-            android:id="@+id/txtPurpose"
-            android:layout_width="0dp"
-            android:layout_weight="14"
-            android:layout_height="wrap_content"
-            android:text="Purpose"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="end"
-            android:layout_marginRight="10dp"
-            android:padding="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            <ImageView
+                android:id="@+id/imgStatusMarked"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="5dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/notmarked"/>
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:layout_toRightOf="@+id/imgStatusMarked"
+                android:layout_gravity="end"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/purple_700"
+                />
+            <TextView
+                android:id="@+id/txtPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/txtName"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="end"
+                android:layout_toRightOf="@+id/imgStatusMarked"
+                android:layout_marginRight="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/textColorBlack"
+                />
+                <TextView
+                    android:id="@+id/txtIntime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="In Time"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="end"
+                    android:layout_toRightOf="@+id/txtPhone"
+                    android:layout_below="@+id/txtName"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_horizontal"
+                    android:textSize="12sp"
+                    android:textColor="@color/textColorBlack"
+                    />
 
-        <TextView
-            android:id="@+id/txtDate"
-            android:layout_width="0dp"
-            android:layout_weight="13"
-            android:layout_height="wrap_content"
-            android:text="Date"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="end"
-            android:layout_marginRight="10dp"
-            android:padding="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            />
-        <TextView
-            android:id="@+id/txtNoOfPerson"
-            android:layout_width="0dp"
-            android:layout_weight="15"
-            android:layout_height="wrap_content"
-            android:text="No.of Person"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="end"
-            android:layout_marginRight="10dp"
-            android:padding="10dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            />
+            </RelativeLayout>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/txtIntime"
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="14"
             android:layout_height="wrap_content"
-            android:text="@string/in_time"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="end"
-            android:layout_marginRight="10dp"
-            android:gravity="center_horizontal"
-            android:padding="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            />
+            android:layout_weight="28">
+
+            <TextView
+                android:id="@+id/txtPurpose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Purpose"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:textSize="20sp"
+                android:textColor="@color/textColorBlack"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="15">
+            <TextView
+                android:id="@+id/txtNoOfPerson"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="12"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:textSize="20sp"
+                android:textColor="@color/textColorBlack"
+                />
 
 
-        <TextView
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20">
+
+
+            <TextView
+                android:id="@+id/txtOuttime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                android:layout_marginRight="10dp"
+                android:padding="10dp"
+                android:textSize="20sp"
+                android:textColor="@color/textColorBlack"
+                />
+        </LinearLayout>
+
+
+
+
+        <CheckBox
             android:id="@+id/btnMarkOut"
             android:layout_width="0dp"
-            android:layout_weight="16"
+            android:layout_weight="9"
             android:layout_height="wrap_content"
-            android:text="@string/mark_out"
-            android:background="@drawable/edittext_border"
             android:layout_marginTop="10dp"
-            android:layout_gravity="end"
-            android:layout_marginRight="10dp"
-            android:padding="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
             android:textColor="@color/black"
             />
 

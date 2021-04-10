@@ -77,6 +77,7 @@ public class AddNewVisitor extends AppCompatActivity {
     private Uri imageUri1, imageUri2;
     private EditText edtName, edtPhone, edtPurpose, edtID, edtNoOfPerson;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +95,7 @@ public class AddNewVisitor extends AppCompatActivity {
         edtName = findViewById(R.id.enterName);
         edtPhone = findViewById(R.id.enterPhoneNUmber);
         edtPurpose = findViewById(R.id.enterPurpose);
+
 //        edtID=findViewById(R.id.enterId);
         edtNoOfPerson = findViewById(R.id.enterNoOfPerson);
 
@@ -104,7 +106,9 @@ public class AddNewVisitor extends AppCompatActivity {
         currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
 
+
         if (currentDate != null) {
+
             date.setText(currentDate);
         }
 

@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     private Button refreshButton;
     Api api;
     private String BaseUrl = "http://65.1.117.91/";
+    private TextView todayDate;
+    private String todayDateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +63,19 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv);
         addNewVisitor = findViewById(R.id.addNewVisitor);
         refreshButton = findViewById(R.id.refreshButton);
+        todayDate=findViewById(R.id.currentDate);
         currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
+
+        todayDateFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(new Date());
+
+
+
+
+
+        if (todayDateFormat!=null){
+            todayDate.setText(todayDateFormat);
+        }
         retrofit = new Retrofit.Builder().baseUrl(BaseUrl + "api/").addConverterFactory(GsonConverterFactory.create()).build();
         api = retrofit.create(Api.class);
 

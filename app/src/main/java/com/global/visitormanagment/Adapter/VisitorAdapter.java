@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,54 +62,68 @@ public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         if (visitorModelArrayList.get(position).getOut_time() != null) {
-            holder.btnMarkOut.setVisibility(View.GONE);
+            holder.imgStatusMarked.setImageDrawable(context.getResources().getDrawable(R.drawable.marked));
+            holder.btnMarkOut.setChecked(true);
+            holder.btnMarkOut.setClickable(false);
+            holder.outTime.setText(visitorModelArrayList.get(position).getOut_time());
+
         }
         holder.name.setText(visitorModelArrayList.get(position).getName());
-        holder.phone.setText(visitorModelArrayList.get(position).getPhone());
+        holder.phone.setText(visitorModelArrayList.get(position).getPhone()+",");
         holder.purpose.setText(visitorModelArrayList.get(position).getPurpose());
-        holder.date.setText(visitorModelArrayList.get(position).getDate());
+//        holder.date.setText(visitorModelArrayList.get(position).getDate());
         holder.inTime.setText(visitorModelArrayList.get(position).getIn_time());
         holder.noOfPersons.setText(Integer.toString(visitorModelArrayList.get(position).getNo_of_person()));
 
-        holder.btnMarkOut.setOnClickListener(new View.OnClickListener() {
+
+        holder.btnMarkOut.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+
             @Override
-            public void onClick(View v) {
-                hide = 0;
-                String myFormat2 = "h:mm a"; //In which you need put here
-                SimpleDateFormat sdf2 = new SimpleDateFormat(myFormat2, Locale.US);
+            public void onCheckedChanged(CompoundButton arg0, boolean isChecked) {
+                if (isChecked){
+//                    Toast.makeText(CheckBoxTuts.this, "male" , Toast.LENGTH_SHORT).show();
+                    holder.btnMarkOut.setClickable(false);
+                    // disable checkbox
 
-                outTime = String.valueOf(sdf2.format(myCalendar.getTime()));
-                //  markout(visitorModelArrayList.get(position).getId(),outTime);
+                    holder.imgStatusMarked.setImageDrawable(context.getResources().getDrawable(R.drawable.marked));
+                    hide = 0;
+                    String myFormat2 = "h:mm a"; //In which you need put here
+                    SimpleDateFormat sdf2 = new SimpleDateFormat(myFormat2, Locale.US);
 
-                Retrofit retrofit = new Retrofit.Builder().baseUrl(BaseUrl + "api/").addConverterFactory(GsonConverterFactory.create()).build();
-                Api api = retrofit.create(Api.class);
+                    outTime = String.valueOf(sdf2.format(myCalendar.getTime()));
+                    //  markout(visitorModelArrayList.get(position).getId(),outTime);
 
-                // calling api to mark out the visitor
-                Call<VisitorModel> call2 = api.markOutVisitor(outTime, visitorModelArrayList.get(position).getId()
-                );
+                    Retrofit retrofit = new Retrofit.Builder().baseUrl(BaseUrl + "api/").addConverterFactory(GsonConverterFactory.create()).build();
+                    Api api = retrofit.create(Api.class);
 
-                call2.enqueue(new Callback<VisitorModel>() {
-                    @Override
-                    public void onResponse(Call<VisitorModel> call, Response<VisitorModel> response) {
-                        if (response != null) {
-                            Toast.makeText(context, "marked out", Toast.LENGTH_SHORT).show();
+                    // calling api to mark out the visitor
+                    Call<VisitorModel> call2 = api.markOutVisitor(outTime, visitorModelArrayList.get(position).getId()
+                    );
 
-                            holder.btnMarkOut.setVisibility(View.GONE);
+                    call2.enqueue(new Callback<VisitorModel>() {
+                        @Override
+                        public void onResponse(Call<VisitorModel> call, Response<VisitorModel> response) {
+                            if (response != null) {
+                                Toast.makeText(context, "marked out", Toast.LENGTH_SHORT).show();
+
+                                holder.btnMarkOut.setVisibility(View.GONE);
 
 
-                            Log.d(TAG, "onResponse: " + response.message());
+                                Log.d(TAG, "onResponse: " + response.message());
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<VisitorModel> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<VisitorModel> call, Throwable t) {
 
-                        hide = 0;
-                        Log.d(TAG, "onFailure: " + t.getMessage());
-                    }
-                });
+                            hide = 0;
+                            Log.d(TAG, "onFailure: " + t.getMessage());
+                        }
+                    });
+                }
             }
         });
+
     }
 
 //    private Boolean markout(int id, String outTime) {
@@ -159,8 +176,9 @@ public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView name, phone, purpose, date, noOfPersons, inTime;
-        private TextView btnMarkOut;
+        private TextView name, phone, purpose, date, noOfPersons, inTime,outTime;
+        private CheckBox btnMarkOut;
+        private ImageView imgStatusMarked;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -168,10 +186,12 @@ public class VisitorAdapter extends RecyclerView.Adapter<VisitorAdapter.ViewHold
             name = itemView.findViewById(R.id.txtName);
             phone = itemView.findViewById(R.id.txtPhone);
             purpose = itemView.findViewById(R.id.txtPurpose);
-            date = itemView.findViewById(R.id.txtDate);
+
             noOfPersons = itemView.findViewById(R.id.txtNoOfPerson);
             inTime = itemView.findViewById(R.id.txtIntime);
             btnMarkOut = itemView.findViewById(R.id.btnMarkOut);
+            imgStatusMarked=itemView.findViewById(R.id.imgStatusMarked);
+            outTime=itemView.findViewById(R.id.txtOuttime);
         }
     }
 
